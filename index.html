@@ -1,150 +1,502 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <title>MZ Care - جمالك في أمان</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png">
-</head>
-<body>
-  <!-- شاشة التحميل -->
-  <div id="loading-overlay">
-    <div class="spinner"></div>
-  </div>
+import React, { useState, useEffect } from 'react';
+import { 
+  ShoppingBag, 
+  Search, 
+  User, 
+  Menu, 
+  X, 
+  Star, 
+  Truck, 
+  ShieldCheck, 
+  ArrowLeftRight, 
+  Facebook, 
+  Twitter, 
+  Instagram,
+  ArrowRight,
+  ChevronRight,
+  Filter
+} from 'lucide-react';
 
-  <!-- الهيدر الجديد -->
-  <header id="top-header" class="modern-header">
-    <div class="header-container">
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
+// --- Mock Data ---
+const PRODUCTS = [
+  {
+    id: 1,
+    name: "ساعة ألترا الذكية - إصدار المبدعين",
+    price: 1200,
+    category: "إلكترونيات",
+    image: "https://images.unsplash.com/photo-1546868891-d5b8ad16a782?auto=format&fit=crop&q=80&w=500",
+    description: "ساعة ذكية متطورة تدعم جميع الأنشطة الرياضية مع بطارية تدوم طويلاً وشاشة AMOLED عالية الدقة.",
+    rating: 4.8,
+    reviews: 124
+  },
+  {
+    id: 2,
+    name: "سماعات لاسلكية برو - عازلة للضوضاء",
+    price: 850,
+    category: "إلكترونيات",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=500",
+    description: "تجربة صوتية فريدة مع تقنية عزل الضوضاء النشطة وتصميم مريح للأذن للاستخدام الطويل.",
+    rating: 4.9,
+    reviews: 89
+  },
+  {
+    id: 3,
+    name: "حقيبة ظهر جلدية - تصميم كلاسيكي",
+    price: 450,
+    category: "إكسسوارات",
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=500",
+    description: "حقيبة مصنوعة من الجلد الطبيعي 100%، تتسع لجهاز لابتوب 15 بوصة مع جيوب متعددة للتنظيم.",
+    rating: 4.7,
+    reviews: 56
+  },
+  {
+    id: 4,
+    name: "نظارة شمسية عصرية - حماية UV",
+    price: 320,
+    category: "إكسسوارات",
+    image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=500",
+    description: "نظارات شمسية بتصميم عصري توفر حماية كاملة من الأشعة فوق البنفسجية وتناسب جميع الوجوه.",
+    rating: 4.5,
+    reviews: 42
+  }
+];
 
-      <!-- Logo -->
-      <a href="#home" class="modern-logo">
-        <div class="logo-icon">
-          <img src="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png" alt="MZ Care">
-        </div>
-        <span class="logo-text">MZ CARE</span>
-      </a>
+// --- Components ---
 
-      <!-- Desktop Navigation -->
-      <nav class="desktop-nav">
-        <a href="#home" class="nav-link active" data-section="home">الرئيسية</a>
-        <a href="#shop" class="nav-link" data-section="shop">المنتجات</a>
-        <a href="#offers" class="nav-link" data-section="offers">العروض</a>
-        <a href="#about" class="nav-link" data-section="about">تواصل معنا</a>
-      </nav>
+const Navbar = ({ setPage, cartCount }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-      <!-- Header Icons -->
-      <div class="header-actions">
-        <button class="header-action-btn search-btn" id="header-search-btn">
-          <i class="fas fa-search"></i>
-        </button>
-        <a href="#favorites" class="header-action-btn" data-section="favorites">
-          <i class="fas fa-heart"></i>
-          <span class="action-badge" id="fav-count" style="display:none;">0</span>
-        </a>
-        <button class="header-action-btn" id="user-menu-btn">
-          <i class="fas fa-user"></i>
-        </button>
-        <a href="cart.html" id="cart-link" class="header-action-btn cart-btn">
-          <i class="fas fa-shopping-bag"></i>
-          <span class="action-badge" id="cart-count">0</span>
-        </a>
-      </div>
-    </div>
+  return (
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600">
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu">
-      <div class="mobile-menu-header">
-        <span class="mobile-menu-title">القائمة</span>
-        <button id="close-mobile-menu" class="close-mobile-menu">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <nav class="mobile-nav">
-        <a href="#home" class="mobile-nav-link" data-section="home">
-          <i class="fas fa-home"></i>
-          <span>الرئيسية</span>
-        </a>
-        <a href="#shop" class="mobile-nav-link" data-section="shop">
-          <i class="fas fa-shopping-bag"></i>
-          <span>المنتجات</span>
-        </a>
-        <a href="#offers" class="mobile-nav-link" data-section="offers">
-          <i class="fas fa-tags"></i>
-          <span>العروض</span>
-        </a>
-        <a href="#favorites" class="mobile-nav-link" data-section="favorites">
-          <i class="fas fa-heart"></i>
-          <span>المفضلة</span>
-        </a>
-        <a href="#orders" class="mobile-nav-link" data-section="orders">
-          <i class="fas fa-box"></i>
-          <span>طلباتي</span>
-        </a>
-        <a href="#profile" class="mobile-nav-link" data-section="profile">
-          <i class="fas fa-user"></i>
-          <span>حسابي</span>
-        </a>
-        <a href="#about" class="mobile-nav-link" data-section="about">
-          <i class="fas fa-info-circle"></i>
-          <span>تواصل معنا</span>
-        </a>
-      </nav>
-    </div>
+          {/* Logo */}
+          <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => setPage('home')}>
+            <span className="text-2xl font-bold bg-indigo-600 text-white px-2 py-1 rounded">M</span>
+            <span className="ml-2 text-xl font-bold text-gray-900 tracking-tight">MODERN STORE</span>
+          </div>
 
-    <!-- Search Overlay -->
-    <div id="search-overlay" class="search-overlay">
-      <div class="search-overlay-content">
-        <button id="close-search" class="close-search">
-          <i class="fas fa-times"></i>
-        </button>
-        <div class="search-box-large">
-          <i class="fas fa-search"></i>
-          <input type="text" id="header-search-input" placeholder="ابحث عن منتج...">
-        </div>
-        <div id="search-results" class="search-results"></div>
-      </div>
-    </div>
-  </header>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-8 rtl:space-x-reverse">
+            <button onClick={() => setPage('home')} className="text-gray-700 hover:text-indigo-600 transition font-medium">الرئيسية</button>
+            <button onClick={() => setPage('catalog')} className="text-gray-700 hover:text-indigo-600 transition font-medium">المنتجات</button>
+            <button className="text-gray-700 hover:text-indigo-600 transition font-medium">العروض</button>
+            <button className="text-gray-700 hover:text-indigo-600 transition font-medium">من نحن</button>
+          </div>
 
-  <main>
-    <!-- الصفحة الرئيسية -->
-    <section class="page-section" id="home-section">
-      <!-- Hero Section -->
-      <div class="hero-section">
-        <div class="hero-content">
-          <div class="hero-badge">🌟 مجموعة جديدة</div>
-          <h1 class="hero-title">اكتشف الأناقة<br>والجودة</h1>
-          <p class="hero-subtitle">منتجات عصرية مصممة خصيصاً لتناسب أسلوب حياتك المتميز</p>
-          <div class="hero-actions">
-            <a href="#shop" class="btn btn-primary btn-large">
-              تسوق الآن
-              <i class="fas fa-arrow-left"></i>
-            </a>
-            <a href="#offers" class="btn btn-outline btn-large">
-              العروض الخاصة
-            </a>
+          {/* Icons */}
+          <div className="flex items-center space-x-4 rtl:space-x-reverse text-gray-600">
+            <button className="hover:text-indigo-600 transition"><Search size={20} /></button>
+            <button className="hover:text-indigo-600 transition hidden sm:block"><User size={20} /></button>
+            <button className="relative hover:text-indigo-600 transition">
+              <ShoppingBag size={20} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
           </div>
         </div>
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" alt="Hero">
-        </div>
       </div>
 
-      <!-- Benefits Section -->
-      <section class="benefits-section">
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <i class="fas fa-truck"></i>
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-b border-gray-100 p-4 space-y-4">
+          <button onClick={() => { setPage('home'); setIsOpen(false); }} className="block w-full text-right text-gray-700">الرئيسية</button>
+          <button onClick={() => { setPage('catalog'); setIsOpen(false); }} className="block w-full text-right text-gray-700">المنتجات</button>
+          <button className="block w-full text-right text-gray-700">العروض</button>
+          <button className="block w-full text-right text-gray-700">من نحن</button>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+const Hero = ({ setPage }) => (
+  <section className="relative h-[500px] md:h-[600px] flex items-center overflow-hidden">
+    <div className="absolute inset-0 bg-gray-900">
+      <img 
+        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200" 
+        className="w-full h-full object-cover opacity-60" 
+        alt="Hero Banner" 
+      />
+    </div>
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+      <h1 className="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in">اكتشف الأناقة والجودة</h1>
+      <p className="text-lg md:text-xl mb-8 max-w-2xl text-gray-100">مجموعتنا الجديدة من المنتجات العصرية المصممة خصيصاً لتناسب أسلوب حياتك المتميز.</p>
+      <button 
+        onClick={() => setPage('catalog')}
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 flex items-center gap-2"
+      >
+        تسوق الآن <ArrowRight size={20} />
+      </button>
+    </div>
+  </section>
+);
+
+const Benefits = () => (
+  <section className="py-12 bg-gray-50 border-y border-gray-100">
+    <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="flex items-center gap-4 p-4">
+        <div className="bg-indigo-100 p-3 rounded-full text-indigo-600">
+          <Truck size={24} />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900">شحن سريع</h3>
+          <p className="text-sm text-gray-600">توصيل لباب بيتك في 24-48 ساعة</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4 p-4">
+        <div className="bg-indigo-100 p-3 rounded-full text-indigo-600">
+          <ShieldCheck size={24} />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900">دفع آمن</h3>
+          <p className="text-sm text-gray-600">نظام تشفير متطور لحماية بياناتك</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4 p-4">
+        <div className="bg-indigo-100 p-3 rounded-full text-indigo-600">
+          <ArrowLeftRight size={24} />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900">إرجاع سهل</h3>
+          <p className="text-sm text-gray-600">إمكانية الاسترجاع خلال 14 يوماً</p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const ProductCard = ({ product, onSelect }) => (
+  <div 
+    className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-pointer"
+    onClick={() => onSelect(product)}
+  >
+    <div className="relative aspect-square overflow-hidden bg-gray-100">
+      <img 
+        src={product.image} 
+        alt={product.name} 
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+      />
+      <div className="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded-lg text-xs font-bold text-indigo-600">
+        {product.category}
+      </div>
+    </div>
+    <div className="p-4">
+      <div className="flex items-center gap-1 text-yellow-400 mb-1">
+        <Star size={14} fill="currentColor" />
+        <span className="text-xs text-gray-500 font-medium">{product.rating} ({product.reviews})</span>
+      </div>
+      <h3 className="text-gray-900 font-semibold mb-2 group-hover:text-indigo-600 transition truncate">{product.name}</h3>
+      <div className="flex items-center justify-between">
+        <span className="text-xl font-bold text-gray-900">{product.price} ر.س</span>
+        <button className="bg-gray-900 text-white p-2 rounded-lg hover:bg-indigo-600 transition">
+          <ShoppingBag size={18} />
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+const Footer = () => (
+  <footer className="bg-gray-900 text-gray-300 py-16">
+    <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="space-y-4">
+        <div className="flex items-center text-white">
+          <span className="text-2xl font-bold bg-indigo-600 px-2 py-1 rounded">M</span>
+          <span className="ml-2 text-xl font-bold tracking-tight">MODERN STORE</span>
+        </div>
+        <p className="text-sm leading-relaxed">
+          نحن نوفر لك أفضل المنتجات العصرية بأعلى جودة وأفضل سعر. تجربتكم هي أولويتنا القصوى.
+        </p>
+        <div className="flex space-x-4 rtl:space-x-reverse">
+          <Facebook size={20} className="hover:text-indigo-400 cursor-pointer" />
+          <Twitter size={20} className="hover:text-indigo-400 cursor-pointer" />
+          <Instagram size={20} className="hover:text-indigo-400 cursor-pointer" />
+        </div>
+      </div>
+      
+      <div>
+        <h4 className="text-white font-bold mb-6">روابط سريعة</h4>
+        <ul className="space-y-3 text-sm">
+          <li className="hover:text-indigo-400 cursor-pointer">الرئيسية</li>
+          <li className="hover:text-indigo-400 cursor-pointer">المتجر</li>
+          <li className="hover:text-indigo-400 cursor-pointer">من نحن</li>
+          <li className="hover:text-indigo-400 cursor-pointer">تواصل معنا</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="text-white font-bold mb-6">خدمة العملاء</h4>
+        <ul className="space-y-3 text-sm">
+          <li className="hover:text-indigo-400 cursor-pointer">سياسة الاسترجاع</li>
+          <li className="hover:text-indigo-400 cursor-pointer">تتبع الطلب</li>
+          <li className="hover:text-indigo-400 cursor-pointer">الأسئلة الشائعة</li>
+          <li className="hover:text-indigo-400 cursor-pointer">طرق الشحن</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="text-white font-bold mb-6">النشرة الإخبارية</h4>
+        <p className="text-sm mb-4">اشترك للحصول على أحدث العروض والخصومات.</p>
+        <div className="flex gap-2">
+          <input 
+            type="email" 
+            placeholder="بريدك الإلكتروني" 
+            className="bg-gray-800 border-none rounded-lg px-4 py-2 w-full focus:ring-2 focus:ring-indigo-500" 
+          />
+          <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+            اشتراك
+          </button>
+        </div>
+      </div>
+    </div>
+    <div className="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-gray-800 text-center text-xs">
+      &copy; 2025 Modern Store. كل الحقوق محفوظة. تم التطوير بواسطة خلودة.
+    </div>
+  </footer>
+);
+
+// --- Pages ---
+
+const HomePage = ({ setPage, onSelectProduct }) => (
+  <div className="animate-fade-in">
+    <Hero setPage={setPage} />
+    <Benefits />
+    
+    <section className="py-20 max-w-7xl mx-auto px-4">
+      <div className="flex items-center justify-between mb-10">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900">منتجات مختارة</h2>
+          <p className="text-gray-500 mt-2">اخترنا لك الأفضل في هذا الموسم</p>
+        </div>
+        <button 
+          onClick={() => setPage('catalog')}
+          className="text-indigo-600 font-bold flex items-center gap-1 hover:underline"
+        >
+          عرض الكل <ChevronRight size={20} />
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {PRODUCTS.map(product => (
+          <ProductCard key={product.id} product={product} onSelect={onSelectProduct} />
+        ))}
+      </div>
+    </section>
+
+    <section className="bg-indigo-600 py-16 text-white text-center">
+      <h2 className="text-3xl font-bold mb-4">خصم 20% على أول طلب لك!</h2>
+      <p className="mb-8 opacity-90">استخدم الكود WELCOME20 عند الدفع</p>
+      <button className="bg-white text-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
+        احصل على العرض
+      </button>
+    </section>
+
+    <section className="py-20 max-w-7xl mx-auto px-4 bg-white">
+      <h2 className="text-3xl font-bold text-center mb-16">آراء عملاءنا</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="bg-gray-50 p-8 rounded-2xl border border-gray-100 text-center">
+            <div className="flex justify-center text-yellow-400 mb-4">
+              {[...Array(5)].map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}
             </div>
-            <h3 class="benefit-title">شحن سريع</h3>
-            <p class="benefit-text">توصيل لباب بيتك في 24-48 ساعة</p>
+            <p className="italic text-gray-600 mb-6 font-medium">"تجربة تسوق رائعة جداً، المنتج وصل في وقت قياسي والجودة فاقت توقعاتي!"</p>
+            <div className="font-bold text-gray-900">أحمد محمد</div>
+            <div className="text-xs text-gray-400">عميل موثق</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+);
+
+const CatalogPage = ({ onSelectProduct }) => (
+  <div className="py-12 max-w-7xl mx-auto px-4 min-h-screen">
+    <div className="flex flex-col md:flex-row gap-10">
+      {/* Sidebar Filters */}
+      <aside className="w-full md:w-64 space-y-8">
+        <div>
+          <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Filter size={18} /> التصفية
+          </h3>
+          <div className="space-y-2">
+            <div className="font-semibold text-sm text-gray-700 mb-2">الأقسام</div>
+            {["إلكترونيات", "إكسسوارات", "ملابس"].map(cat => (
+              <label key={cat} className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                <input type="checkbox" className="rounded text-indigo-600" /> {cat}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div className="font-semibold text-sm text-gray-700 mb-4">نطاق السعر</div>
+          <input type="range" className="w-full accent-indigo-600" min="0" max="2000" />
+          <div className="flex justify-between text-xs text-gray-500 mt-2">
+            <span>0 ر.س</span>
+            <span>2000 ر.س</span>
+          </div>
+        </div>
+      </aside>
+
+      {/* Grid */}
+      <div className="flex-1">
+        <h1 className="text-3xl font-bold mb-8">كل المنتجات</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {PRODUCTS.map(product => (
+            <ProductCard key={product.id} product={product} onSelect={onSelectProduct} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const ProductDetailPage = ({ product, addToCart, setPage }) => {
+  const [selectedSize, setSelectedSize] = useState('M');
+
+  return (
+    <div className="py-12 max-w-7xl mx-auto px-4 min-h-screen">
+      <button onClick={() => setPage('catalog')} className="mb-8 flex items-center gap-2 text-gray-500 hover:text-gray-900 font-medium">
+        <ArrowLeftRight size={18} className="rotate-180" /> العودة للتسوق
+      </button>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Gallery */}
+        <div className="space-y-4">
+          <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
+            <img src={product.image} className="w-full h-full object-cover" alt={product.name} />
+          </div>
+          <div className="grid grid-cols-4 gap-4">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200 cursor-pointer opacity-70 hover:opacity-100 transition">
+                <img src={product.image} className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Info */}
+        <div className="space-y-6">
+          <div className="pb-6 border-b border-gray-100">
+            <span className="text-indigo-600 font-bold text-sm tracking-wider uppercase">{product.category}</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2">{product.name}</h1>
+            <div className="flex items-center gap-2 mt-4">
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill={i < 4 ? "currentColor" : "none"} stroke="currentColor" />)}
+              </div>
+              <span className="text-sm text-gray-500 font-medium">4.8 (124 تقييم)</span>
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mt-6">{product.price} ر.س</div>
+          </div>
+
+          <p className="text-gray-600 leading-relaxed">{product.description}</p>
+
+          <div className="space-y-4">
+            <div className="font-bold text-gray-900">المقاس</div>
+            <div className="flex gap-3">
+              {['S', 'M', 'L', 'XL'].map(size => (
+                <button 
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className={`w-12 h-12 rounded-lg border font-bold transition flex items-center justify-center
+                    ${selectedSize === size ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-900'}`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 pt-6">
+            <button 
+              onClick={() => addToCart(product)}
+              className="flex-1 bg-gray-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-gray-800 transition flex items-center justify-center gap-2"
+            >
+              إضافة للسلة <ShoppingBag size={20} />
+            </button>
+            <button className="flex-1 bg-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-indigo-700 transition">
+              شراء الآن
+            </button>
+          </div>
+          
+          <div className="bg-gray-50 p-4 rounded-xl space-y-3">
+             <div className="flex items-center gap-3 text-sm text-gray-700">
+                <Truck size={18} className="text-indigo-600" /> شحن مجاني للطلبات فوق 500 ر.س
+             </div>
+             <div className="flex items-center gap-3 text-sm text-gray-700">
+                <ShieldCheck size={18} className="text-indigo-600" /> ضمان أصلي 100%
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Main App Component ---
+
+export default function App() {
+  const [page, setPage] = useState('home'); // home, catalog, product
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    window.scrollTo(0, 0);
+  }, [page, selectedProduct]);
+
+  const onSelectProduct = (product) => {
+    setSelectedProduct(product);
+    setPage('product');
+  };
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+    // Simulate a simple notification (in memory for now)
+  };
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-right" dir="rtl">
+      <Navbar setPage={setPage} cartCount={cart.length} />
+      
+      <main className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        {page === 'home' && <HomePage setPage={setPage} onSelectProduct={onSelectProduct} />}
+        {page === 'catalog' && <CatalogPage onSelectProduct={onSelectProduct} />}
+        {page === 'product' && selectedProduct && (
+          <ProductDetailPage 
+            product={selectedProduct} 
+            addToCart={addToCart} 
+            setPage={setPage}
+          />
+        )}
+      </main>
+
+      <Footer />
+
+      {/* Quick CSS for animations */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}</style>
+    </div>
+  );
+}
+
           </div>
           <div class="benefit-card">
             <div class="benefit-icon">
