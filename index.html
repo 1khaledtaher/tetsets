@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>MZ Care - جمالك في أمان</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png">
+</head>
+<body>
+  <!-- شاشة التحميل -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- الهيدر الجديد -->
+  <header id="top-header" class="modern-header">
+    <div class="header-container">
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Logo -->
+      <a href="#home" class="modern-logo">
+        <div class="logo-icon">
+          <img src="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png" alt="MZ Care">
+        </div>
+        <span class="logo-text">MZ CARE</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav">
+        <a href="#home" class="nav-link active" data-section="home">الرئيسية</a>
+        <a href="#shop" class="nav-link" data-section="shop">المنتجات</a>
+        <a href="#offers" class="nav-link" data-section="offers">العروض</a>
+        <a href="#about" class="nav-link" data-section="about">تواصل معنا</a>
+      </nav>
+
+      <!-- Header Icons -->
+      <div class="header-actions">
+        <button class="header-action-btn search-btn" id="header-search-btn">
+          <i class="fas fa-search"></i>
+        </button>
+        <a href="#favorites" class="header-action-btn" data-section="favorites">
+          <i class="fas fa-heart"></i>
+          <span class="action-badge" id="fav-count" style="display:none;">0</span>
+        </a>
+        <button class="header-action-btn" id="user-menu-btn">
+          <i class="fas fa-user"></i>
+        </button>
+        <a href="cart.html" id="cart-link" class="header-action-btn cart-btn">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="action-badge" id="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-menu-header">
+        <span class="mobile-menu-title">القائمة</span>
+        <button id="close-mobile-menu" class="close-mobile-menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <nav class="mobile-nav">
+        <a href="#home" class="mobile-nav-link" data-section="home">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="#shop" class="mobile-nav-link" data-section="shop">
+          <i class="fas fa-shopping-bag"></i>
+          <span>المنتجات</span>
+        </a>
+        <a href="#offers" class="mobile-nav-link" data-section="offers">
+          <i class="fas fa-tags"></i>
+          <span>العروض</span>
+        </a>
+        <a href="#favorites" class="mobile-nav-link" data-section="favorites">
+          <i class="fas fa-heart"></i>
+          <span>المفضلة</span>
+        </a>
+        <a href="#orders" class="mobile-nav-link" data-section="orders">
+          <i class="fas fa-box"></i>
+          <span>طلباتي</span>
+        </a>
+        <a href="#profile" class="mobile-nav-link" data-section="profile">
+          <i class="fas fa-user"></i>
+          <span>حسابي</span>
+        </a>
+        <a href="#about" class="mobile-nav-link" data-section="about">
+          <i class="fas fa-info-circle"></i>
+          <span>تواصل معنا</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+      <div class="search-overlay-content">
+        <button id="close-search" class="close-search">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="search-box-large">
+          <i class="fas fa-search"></i>
+          <input type="text" id="header-search-input" placeholder="ابحث عن منتج...">
+        </div>
+        <div id="search-results" class="search-results"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- الصفحة الرئيسية -->
+    <section class="page-section" id="home-section">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-badge">🌟 مجموعة جديدة</div>
+          <h1 class="hero-title">اكتشف الأناقة<br>والجودة</h1>
+          <p class="hero-subtitle">منتجات عصرية مصممة خصيصاً لتناسب أسلوب حياتك المتميز</p>
+          <div class="hero-actions">
+            <a href="#shop" class="btn btn-primary btn-large">
+              تسوق الآن
+              <i class="fas fa-arrow-left"></i>
+            </a>
+            <a href="#offers" class="btn btn-outline btn-large">
+              العروض الخاصة
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800" alt="Hero">
+        </div>
+      </div>
+
+      <!-- Benefits Section -->
+      <section class="benefits-section">
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-truck"></i>
+            </div>
+            <h3 class="benefit-title">شحن سريع</h3>
+            <p class="benefit-text">توصيل لباب بيتك في 24-48 ساعة</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="benefit-title">دفع آمن</h3>
+            <p class="benefit-text">نظام تشفير متطور لحماية بياناتك</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-undo"></i>
+            </div>
+            <h3 class="benefit-title">إرجاع سهل</h3>
+            <p class="benefit-text">إمكانية الاسترجاع خلال 14 يوماً</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Offers -->
+      <section class="section-container" id="featured-offers-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <i class="fas fa-bolt"></i>
+            عروض حصرية
+          </h2>
+        </div>
+        <div class="offers-carousel">
+          <div class="offers-track" id="offers-container"></div>
+          <button class="carousel-btn carousel-prev" id="offers-prev">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button class="carousel-btn carousel-next" id="offers-next">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+        <div class="carousel-indicators" id="offers-indicators"></div>
+      </section>
+
+      <!-- Featured Products -->
+      <section class="section-container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">
+              <i class="fas fa-star"></i>
+              منتجات مختارة
+            </h2>
+            <p class="section-subtitle">اخترنا لك الأفضل في هذا الموسم</p>
+          </div>
+          <a href="#shop" class="view-all-link">
+            عرض الكل
+            <i class="fas fa-arrow-left"></i>
+          </a>
+        </div>
+        <div id="featured-products-grid" class="products-grid"></div>
+      </section>
+
+      <!-- Promo Banner -->
+      <section class="promo-banner">
+        <div class="promo-content">
+          <h2 class="promo-title">خصم 20% على أول طلب لك!</h2>
+          <p class="promo-text">استخدم الكود WELCOME20 عند الدفع</p>
+          <button class="btn btn-light btn-large">احصل على العرض</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- صفحة المنتجات -->
+    <section class="page-section" id="shop-section" style="display:none;">
+      <div class="shop-container">
+        <div class="shop-header">
+          <h1 class="page-title">المنتجات</h1>
+          
+          <!-- شريط البحث -->
+          <div class="shop-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="shop-search-input" placeholder="ابحث عن منتج...">
+            <button id="clear-search-btn" class="clear-btn" style="display:none;">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- فلاتر التصنيف -->
+        <div class="categories-filter" id="categories-tabs">
+          <button class="category-chip active" data-category="all">الكل</button>
+        </div>
+
+        <!-- شبكة المنتجات -->
+        <div id="shop-products-grid" class="products-grid"></div>
+      </div>
+    </section>
+
+    <!-- صفحة المفضلة -->
+    <section class="page-section" id="favorites-section" style="display:none;">
+      <div class="section-container">
+        <h1 class="page-title">
+          <i class="fas fa-heart"></i>
+          المفضلة
+        </h1>
+        <div id="favorites-grid" class="products-grid"></div>
+      </div>
+    </section>
+
+    <!-- صفحة تفاصيل المنتج -->
+    <section class="page-section" id="product-details-section" style="display:none;">
+    </section>
+
+    <!-- صفحة الطلبات -->
+    <section class="page-section" id="orders-section" style="display:none;">
+      <div class="section-container">
+        <h1 class="page-title">
+          <i class="fas fa-box"></i>
+          طلباتي
+        </h1>
+        <div id="orders-list"></div>
+      </div>
+    </section>
+
+    <!-- صفحة الملف الشخصي -->
+    <section class="page-section" id="profile-section" style="display:none;">
+      <div class="section-container">
+        <div class="profile-card">
+          <div class="profile-header">
+            <img id="profile-avatar-img" class="profile-avatar" src="https://ui-avatars.com/api/?name=?" alt="Avatar">
+            <div class="profile-info">
+              <h2 id="profile-fullname" class="profile-name">-</h2>
+              <p id="profile-email" class="profile-email">-</p>
+              <p class="profile-date">
+                <i class="fas fa-calendar"></i>
+                عضو منذ <span id="profile-date">-</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button id="shipping-data-btn" class="btn btn-primary btn-block">
+              <i class="fas fa-map-marker-alt"></i>
+              بيانات التوصيل
+            </button>
+            <button id="logout-btn" class="btn btn-danger btn-block">
+              <i class="fas fa-sign-out-alt"></i>
+              تسجيل الخروج
+            </button>
+          </div>
+
+          <div class="social-section">
+            <h3 class="social-title">تابعنا على</h3>
+            <div class="social-links">
+              <a href="https://www.facebook.com/share/15xoECsALv/" target="_blank" class="social-link facebook">
+                <i class="fab fa-facebook"></i>
+                <span>فيسبوك</span>
+              </a>
+              <a href="https://api.whatsapp.com/send?phone=201559552721" target="_blank" class="social-link whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <span>واتساب</span>
+              </a>
+              <a href="https://tiktok.com/@mz.care" target="_blank" class="social-link tiktok">
+                <i class="fab fa-tiktok"></i>
+                <span>تيك توك</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="developer-credit">
+            Developed by
+            <a href="https://instagram.com/1khaledtaher" target="_blank">Khaled</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- صفحة من نحن -->
+    <section class="page-section" id="about-section" style="display:none;">
+      <div class="section-container">
+        <h1 class="page-title">تابعنا على فيسبوك</h1>
+        <div class="about-content">
+          <p>تابعنا على صفحتنا على فيسبوك لتعرف كل جديد!</p>
+          <a href="https://www.facebook.com/share/1LiQSDZhnq/" target="_blank" class="btn btn-primary btn-large">
+            <i class="fab fa-facebook"></i>
+            صفحتنا على فيسبوك
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- صفحة العروض -->
+    <section class="page-section" id="offers-section" style="display:none;">
+      <div class="section-container">
+        <h1 class="page-title">
+          <i class="fas fa-tags"></i>
+          العروض
+        </h1>
+        <div id="offers-list-section"></div>
+      </div>
+    </section>
+
+    <!-- صفحة تفاصيل العرض -->
+    <section class="page-section" id="offer-details-section" style="display:none;">
+      <div class="section-container">
+        <button class="back-btn" onclick="history.back()">
+          <i class="fas fa-arrow-right"></i>
+          العودة
+        </button>
+        
+        <div class="offer-details-card">
+          <img id="offer-details-image" src="" alt="صورة العرض" class="offer-details-img">
+          <div class="offer-details-content">
+            <h1 id="offer-details-name" class="offer-details-title"></h1>
+            <p id="offer-details-description" class="offer-details-desc"></p>
+            <div id="offer-details-meta" class="offer-details-meta"></div>
+          </div>
+        </div>
+
+        <div class="offer-products-section">
+          <h3 class="section-title">المنتجات المدرجة في العرض</h3>
+          <div id="offer-products-grid" class="products-grid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav" class="bottom-nav">
+    <a href="#home" class="bottom-nav-item active" data-section="home">
+      <i class="fas fa-home"></i>
+      <span>الرئيسية</span>
+    </a>
+    <a href="#shop" class="bottom-nav-item" data-section="shop">
+      <i class="fas fa-shopping-bag"></i>
+      <span>المنتجات</span>
+    </a>
+    <a href="#offers" class="bottom-nav-item" data-section="offers">
+      <i class="fas fa-tags"></i>
+      <span>العروض</span>
+    </a>
+    <a href="#orders" class="bottom-nav-item" data-section="orders">
+      <i class="fas fa-box"></i>
+      <span>طلباتي</span>
+    </a>
+    <a href="#profile" class="bottom-nav-item" data-section="profile">
+      <i class="fas fa-user"></i>
+      <span>حسابي</span>
+    </a>
+  </nav>
+
+  <!-- Modals (كل المودالات الموجودة في الكود الأصلي) -->
+  
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal-overlay">
+    <div class="modal-container auth-modal">
+      <button id="close-auth-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">تسجيل الدخول</button>
+        <button class="auth-tab" data-tab="signup">إنشاء حساب</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <div class="password-input">
+            <input type="password" id="login-password" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div id="login-error" class="auth-error" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+        <div class="auth-divider">أو</div>
+        <button type="button" id="google-login-btn" class="btn btn-google btn-block">
+          <i class="fab fa-google"></i>
+          تسجيل الدخول بواسطة Google
+        </button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label>الاسم الكامل</label>
+          <input type="text" id="signup-name" required>
+        </div>
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <div class="password-input">
+            <input type="password" id="signup-password" required>
+            <button type="button" class="password-toggle" onclick="togglePassword('signup-password')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div id="signup-error" class="auth-error" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary btn-block">إنشاء حساب</button>
+        <div class="auth-divider">أو</div>
+        <button type="button" id="google-signup-btn" class="btn btn-google btn-block">
+          <i class="fab fa-google"></i>
+          التسجيل بواسطة Google
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Size Selection Modal -->
+  <div id="size-selection-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="close-size-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3 class="modal-title">اختر الحجم</h3>
+      <div id="size-selection-product-info" class="size-product-info">
+        <img id="size-modal-product-img" src="" alt="Product">
+        <div>
+          <h4 id="size-modal-product-name"></h4>
+          <p id="size-modal-product-desc"></p>
+        </div>
+      </div>
+      <div id="size-options" class="size-options"></div>
+      <div class="modal-actions">
+        <button id="confirm-size-selection" class="btn btn-primary btn-block">أضف للسلة</button>
+        <button id="cancel-size-selection" class="btn btn-outline btn-block">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipping Data Modal -->
+  <div id="shipping-data-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="close-shipping-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3 class="modal-title">بيانات التوصيل</h3>
+      
+      <div id="shipping-data-display" style="display:none;">
+        <div class="data-display">
+          <h4>البيانات المحفوظة:</h4>
+          <div id="saved-shipping-data"></div>
+          <button id="edit-shipping-data" class="btn btn-primary btn-block">تعديل البيانات</button>
+        </div>
+      </div>
+      
+      <form id="shipping-data-form" style="display:none;">
+        <div class="form-group">
+          <label>الاسم بالكامل *</label>
+          <input type="text" id="modal-full-name" name="fullName" required>
+        </div>
+        <div class="form-group">
+          <label>رقم الهاتف *</label>
+          <input type="tel" id="modal-phone-number" name="phoneNumber" required>
+        </div>
+        <div class="form-group">
+          <label>رقم هاتف آخر (اختياري)</label>
+          <input type="tel" id="modal-phone-number-2" name="phoneNumber2">
+        </div>
+        <div class="form-group">
+          <label>العنوان *</label>
+          <textarea id="modal-address" name="address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>مكان مميز بجانب العنوان (اختياري)</label>
+          <input type="text" id="modal-landmark" name="landmark">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary btn-block">حفظ البيانات</button>
+          <button type="button" id="cancel-shipping-data" class="btn btn-outline btn-block">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="image-modal" class="modal-overlay image-modal">
+    <button id="close-image-modal" class="modal-close">
+      <i class="fas fa-times"></i>
+    </button>
+    <button id="modal-image-prev" class="image-nav-btn prev">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <button id="modal-image-next" class="image-nav-btn next">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <img id="modal-image" src="" alt="صورة المنتج">
+  </div>
+
+  <!-- Upload Screenshot Modal -->
+  <div id="upload-screenshot-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">رفع لقطة شاشة التحويل</h3>
+        <button id="close-upload-modal" class="modal-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="upload-instructions">
+        <p><strong>تعليمات رفع لقطة شاشة التحويل:</strong></p>
+        <ul>
+          <li>يجب أن تكون الصورة واضحة</li>
+          <li>يُفضل أن تكون من نوع JPG أو PNG</li>
+          <li>حجم الملف أقل من 5 ميجابايت</li>
+        </ul>
+      </div>
+      <div class="file-upload-area">
+        <label for="screenshot-file" class="file-upload-label">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span>اختر ملف أو اسحبه هنا</span>
+        </label>
+        <input type="file" id="screenshot-file" accept="image/*" style="display:none;">
+      </div>
+      <div id="screenshot-preview" class="screenshot-preview"></div>
+      <div class="modal-actions">
+        <button id="upload-screenshot-btn" class="btn btn-primary btn-block" disabled>رفع لقطة الشاشة</button>
+        <button id="cancel-upload-btn" class="btn btn-outline btn-block">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Settings Modal -->
+  <div id="profile-settings-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="close-profile-settings-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3 class="modal-title">إعدادات الحساب</h3>
+      
+      <div id="change-name-section">
+        <h4>تغيير الاسم</h4>
+        <form id="change-name-form">
+          <div class="form-group">
+            <label>الاسم الجديد</label>
+            <input type="text" id="new-name" required>
+          </div>
+          <div id="change-name-error" class="auth-error" style="display:none;"></div>
+          <button type="submit" class="btn btn-primary btn-block">تغيير الاسم</button>
+        </form>
+      </div>
+      
+      <div id="change-password-section" style="display:none;">
+        <h4>تغيير كلمة المرور</h4>
+        <form id="change-password-form">
+          <div class="form-group">
+            <label>كلمة المرور الحالية</label>
+            <div class="password-input">
+              <input type="password" id="current-password" required>
+              <button type="button" class="password-toggle" onclick="togglePassword('current-password')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>كلمة المرور الجديدة</label>
+            <div class="password-input">
+              <input type="password" id="new-password" required>
+              <button type="button" class="password-toggle" onclick="togglePassword('new-password')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>تأكيد كلمة المرور الجديدة</label>
+            <div class="password-input">
+              <input type="password" id="confirm-new-password" required>
+              <button type="button" class="password-toggle" onclick="togglePassword('confirm-new-password')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div id="change-password-error" class="auth-error" style="display:none;"></div>
+          <button type="submit" class="btn btn-primary btn-block">تغيير كلمة المرور</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="product-modal" class="modal-overlay">
+    <div class="modal-container product-modal">
+      <button id="close-product-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <img id="modal-product-img" src="" alt="Product">
+      <h2 id="modal-product-name"></h2>
+      <p id="modal-product-desc"></p>
+      <div id="modal-product-extra"></div>
+      <div class="modal-actions">
+        <button id="modal-add-cart" class="btn btn-primary">
+          <i class="fas fa-shopping-bag"></i>
+          أضف للسلة
+        </button>
+        <button id="modal-add-fav" class="btn btn-outline">
+          <i class="fas fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <script type="module" src="main.js"></script>
+  <script>
+    // Toggle Password Visibility
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = input.nextElementSibling.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
+</body>
+</html>

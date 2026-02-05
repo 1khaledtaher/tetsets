@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>MZ Care - عربة التسوق</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png">
+  <style>
+    /* Cart Specific Styles */
+    .cart-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-xl) var(--spacing-lg);
+    }
+    
+    .cart-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .cart-back-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-700);
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+    }
+    
+    .cart-back-btn:hover {
+      background: var(--gray-100);
+      color: var(--primary);
+    }
+    
+    .cart-title {
+      font-size: var(--font-size-3xl);
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0;
+    }
+    
+    .cart-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-xl);
+    }
+    
+    @media (max-width: 768px) {
+      .cart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .cart-items-section {
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .cart-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: var(--spacing-md);
+      padding: var(--spacing-lg);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    
+    .cart-item-image {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      background: var(--gray-100);
+    }
+    
+    .cart-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .cart-item-name {
+      font-weight: 600;
+      color: var(--gray-900);
+      font-size: var(--font-size-lg);
+    }
+    
+    .cart-item-size {
+      color: var(--gray-600);
+      font-size: var(--font-size-sm);
+    }
+    
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-top: auto;
+    }
+    
+    .quantity-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-100);
+      color: var(--gray-700);
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+    }
+    
+    .quantity-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .quantity-value {
+      min-width: 40px;
+      text-align: center;
+      font-weight: 600;
+      font-size: var(--font-size-md);
+    }
+    
+    .cart-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      justify-content: space-between;
+    }
+    
+    .cart-item-price {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .cart-item-remove {
+      color: var(--danger);
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+    }
+    
+    .cart-item-remove:hover {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    .cart-summary {
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
+    
+    .cart-summary-title {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .coupon-section {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .coupon-input {
+      flex: 1;
+    }
+    
+    .coupon-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 600;
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+    }
+    
+    .coupon-btn:hover {
+      background: var(--accent-dark);
+    }
+    
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-md) 0;
+      color: var(--gray-700);
+    }
+    
+    .summary-row.total {
+      border-top: 2px solid var(--gray-300);
+      margin-top: var(--spacing-md);
+      padding-top: var(--spacing-lg);
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .summary-row.discount {
+      color: var(--success);
+      font-weight: 600;
+    }
+    
+    .checkout-btn {
+      width: 100%;
+      margin-top: var(--spacing-lg);
+    }
+    
+    .empty-cart {
+      text-align: center;
+      padding: var(--spacing-2xl);
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .empty-cart i {
+      font-size: 4rem;
+      color: var(--gray-400);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .empty-cart h3 {
+      font-size: var(--font-size-2xl);
+      color: var(--gray-700);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .empty-cart p {
+      color: var(--gray-600);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .payment-method-card {
+      border: 2px solid var(--gray-300);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-md);
+      transition: var(--transition-base);
+      cursor: pointer;
+    }
+
+    .payment-method-card:hover {
+      border-color: var(--primary);
+    }
+
+    .payment-method-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .payment-method-label {
+      display: flex;
+      align-items: start;
+      gap: var(--spacing-md);
+      cursor: pointer;
+    }
+
+    .payment-method-label input[type="radio"] {
+      margin-top: 4px;
+      width: auto;
+      cursor: pointer;
+    }
+
+    .payment-method-content {
+      flex: 1;
+      display: flex;
+      gap: var(--spacing-md);
+    }
+
+    .payment-method-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-100);
+      color: var(--primary);
+      border-radius: var(--border-radius-md);
+      font-size: 1.5rem;
+    }
+
+    .payment-method-title {
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .payment-method-desc {
+      font-size: var(--font-size-sm);
+      color: var(--gray-600);
+    }
+
+    .payment-method-card input[type="radio"]:checked ~ .payment-method-content .payment-method-icon {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Table styles for compatibility with old cart.js */
+    .cart-table-card {
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .cart-table-header {
+      display: none; /* Hidden by default, can be styled if needed */
+    }
+
+    .cart-summary-modern {
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      max-width: 400px;
+      margin-left: auto;
+    }
+
+    .cart-coupon-row {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .cart-totals-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      padding: var(--spacing-lg) 0;
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .cart-totals-row span {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .discounted-price {
+      color: var(--success);
+    }
+
+    .cart-checkout-btn {
+      width: 100%;
+    }
+
+    .cart-coupon-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 600;
+      border-radius: var(--border-radius-md);
+      transition: var(--transition-base);
+      border: none;
+      cursor: pointer;
+    }
+
+    .cart-coupon-btn:hover {
+      background: var(--accent-dark);
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" style="display: none;">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header id="top-header" class="modern-header">
+    <div class="header-container">
+      <a href="index.html" class="cart-back-btn">
+        <i class="fas fa-arrow-right"></i>
+      </a>
+      
+      <a href="index.html" class="modern-logo">
+        <div class="logo-icon">
+          <img src="https://res.cloudinary.com/dxisaw6cu/image/upload/v1751053748/salendh34hnkyjdbu16x.png" alt="MZ Care">
+        </div>
+        <span class="logo-text">MZ CARE</span>
+      </a>
+
+      <div class="header-actions">
+        <a href="index.html#favorites" class="header-action-btn">
+          <i class="fas fa-heart"></i>
+        </a>
+        <a href="cart.html" class="header-action-btn cart-btn active">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="action-badge" id="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="page-section cart-main-section" id="cart-section">
+      <h2 class="cart-title" style="text-align: center; margin-bottom: var(--spacing-xl);">
+        <i class="fas fa-shopping-bag"></i>
+        سلة التسوق
+      </h2>
+      <div class="cart-table-card">
+        <div class="cart-table-header">
+          <span>المنتج</span>
+          <span>الاسم</span>
+          <span>الكمية</span>
+          <span>السعر</span>
+          <span></span>
+        </div>
+        <div id="cart-items"></div>
+      </div>
+      <div class="cart-summary-modern">
+        <div class="cart-coupon-row">
+          <input id="coupon-code" type="text" maxlength="15" placeholder="كود خصم؟">
+          <button id="apply-coupon" class="cart-coupon-btn">تطبيق</button>
+        </div>
+        <div class="cart-totals-row">
+          <span>الإجمالي: <b><span id="cart-total">0</span> جنيه</b></span>
+          <span id="discount-row" style="display:none;">
+            بعد الخصم: <b class="discounted-price"><span id="cart-discounted-total">0</span> جنيه</b>
+          </span>
+        </div>
+        <button id="checkout-btn" class="big-btn cart-checkout-btn">إتمام الطلب</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shipping Data Modal -->
+  <div id="shipping-data-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="close-shipping-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3 class="modal-title">بيانات التوصيل</h3>
+      
+      <div id="shipping-data-display" style="display:none;">
+        <div class="data-display" style="padding: var(--spacing-xl);">
+          <h4 style="margin-bottom: var(--spacing-md);">البيانات المحفوظة:</h4>
+          <div id="saved-data-content"></div>
+          <div class="modal-actions">
+            <button id="edit-shipping-data" class="btn btn-primary btn-block">تعديل البيانات</button>
+            <button id="cancel-shipping-data" class="btn btn-outline btn-block">إغلاق</button>
+          </div>
+        </div>
+      </div>
+      
+      <form id="shipping-data-form" style="display:none; padding: var(--spacing-xl);">
+        <div class="form-group">
+          <label>الاسم بالكامل *</label>
+          <input type="text" id="modal-full-name" name="fullName" required>
+        </div>
+        
+        <div class="form-group">
+          <label>رقم الهاتف *</label>
+          <input type="tel" id="modal-phone-number" name="phoneNumber" required>
+        </div>
+        
+        <div class="form-group">
+          <label>رقم هاتف آخر (اختياري)</label>
+          <input type="tel" id="modal-phone-number-2" name="phoneNumber2">
+        </div>
+        
+        <div class="form-group">
+          <label>العنوان *</label>
+          <textarea id="modal-address" name="address" rows="3" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>مكان مميز بجانب العنوان (اختياري)</label>
+          <input type="text" id="modal-landmark" name="landmark" placeholder="مثال: بجانب مسجد، أمام مدرسة">
+        </div>
+        
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary btn-block">حفظ البيانات</button>
+          <button type="button" id="cancel-shipping-data" class="btn btn-outline btn-block">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Methods Modal -->
+  <div id="payment-methods-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button id="close-payment-modal" class="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3 class="modal-title">اختر طريقة الدفع</h3>
+      
+      <div id="deposit-message" style="display:none; padding: 0 var(--spacing-xl);"></div>
+      
+      <div class="payment-methods-container" style="padding: var(--spacing-xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
+        <!-- Cash Payment -->
+        <div class="payment-method-option payment-method-card" id="cash-option" data-method="cash">
+          <div class="payment-method-header">
+            <label class="payment-method-label">
+              <input type="radio" name="payment-method" value="cash" id="cash-payment">
+              <div class="payment-method-content">
+                <div class="payment-method-icon">
+                  <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div>
+                  <div class="payment-method-title">الدفع عند الاستلام</div>
+                  <div class="payment-method-desc">تسليم المبلغ للمندوب عند استلام الطلب</div>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="payment-method-details" id="cash-details" style="display:none;">
+            <p>تسليم المبلغ للمندوب عند استلام الطلب</p>
+          </div>
+        </div>
+
+        <!-- Wallet Payment -->
+        <div class="payment-method-option payment-method-card" data-method="wallet">
+          <div class="payment-method-header">
+            <label class="payment-method-label">
+              <input type="radio" name="payment-method" value="wallet" id="wallet-payment">
+              <div class="payment-method-content">
+                <div class="payment-method-icon">
+                  <i class="fas fa-wallet"></i>
+                </div>
+                <div>
+                  <div class="payment-method-title">محفظة إلكترونية</div>
+                  <div class="payment-method-desc">تحويل على الرقم: <strong>01559552721</strong></div>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="payment-method-details" id="wallet-details" style="display:none;">
+            <p>تحويل المبلغ على الرقم: <strong>01559552721</strong></p>
+            <p>بعد التحويل، اذهب لصفحة الطلبات وارفع لقطة شاشة التحويل لتأكيد طلبك ويرجى متباعه صفحة الطلبات لمعرفة حالة الطلب</p>
+          </div>
+        </div>
+
+        <!-- InstaPay (Disabled) -->
+        <div class="payment-method-option payment-method-card disabled" data-method="instapay">
+          <div class="payment-method-header">
+            <label class="payment-method-label">
+              <input type="radio" name="payment-method" value="instapay" id="instapay-payment" disabled>
+              <div class="payment-method-content">
+                <div class="payment-method-icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <div>
+                  <div class="payment-method-title">InstaPay</div>
+                  <div class="payment-method-desc">متاح قريباً</div>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="payment-method-details" id="instapay-details" style="display:none;">
+            <p>متاح قريباً</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button id="confirm-payment-btn" class="btn btn-primary btn-block" disabled>إتمام الطلب</button>
+        <button id="cancel-payment-btn" class="btn btn-outline btn-block">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
